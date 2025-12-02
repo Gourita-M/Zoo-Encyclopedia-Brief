@@ -22,27 +22,63 @@ INSERT INTO Habitat (NomHab, Description_habi) VALUES
 ('Desert', 'Dry sandy area'),
 ('Ocean', 'Large water habitat');
 
-INSERT INTO Animals ( , Alimentaire_type, Image_Animals, HabitatID) VALUES
-('Lion', 'Carnivore', 'lion.jpg', 1),
-('Elephant', 'Herbivore', 'elephant.jpg', 1),
-('Giraffe', 'Herbivore', 'giraffe.jpg', 1),
-('Zebra', 'Herbivore', 'zebra.jpg', 1),
-('Hyena', 'Carnivore', 'hyena.jpg', 1),
+INSERT INTO Animals (Name_Animals, Alimentaire_type, Image_Animals, HabitatID) VALUES
+('Lion', 'Carnivore', 'https://us.images.westend61.de/0001902684pw/full-body-of-magnificent-wild-lion-on-dry-ground-savannah-looking-at-camera-on-sunny-day-in-masai-mara-kenya-ADSF48143.jpg', 1),
+('Elephant', 'Herbivore', 'https://d1jyxxz9imt9yb.cloudfront.net/animal/1/meta_image/regular/LC202302_HwangeTysonMayr_016_416583_reduced.jpg', 1),
+('Giraffe', 'Herbivore', 'https://images.unsplash.com/photo-1689631281246-83cfb8b3db7a?fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDI3fHx8ZW58MHx8fHx8&ixlib=rb-4.1.0&q=60&w=3000', 1),
+('Zebra', 'Herbivore', 'https://us.images.westend61.de/0001043458pw/herd-of-zebras-standing-in-savannah-pilanesberg-national-park-south-africa-AURF06915.jpg', 1),
+('Hyena', 'Carnivore', 'https://upload.wikimedia.org/wikipedia/commons/d/dc/Spotted_hyena_%28Crocuta_crocuta%29.jpg', 1),
 
-('Tiger', 'Carnivore', 'tiger.jpg', 2),
-('Monkey', 'Omnivore', 'monkey.jpg', 2),
-('Parrot', 'Herbivore', 'parrot.jpg', 2),
-('Snake', 'Carnivore', 'snake.jpg', 2),
-('Gorilla', 'Herbivore', 'gorilla.jpg', 2),
+('Tiger', 'Carnivore', 'https://cdn1.matadornetwork.com/blogs/1/2018/11/Bengal-Tiger-in-forest-show-head-and-leg-1200x853.jpg', 2),
+('Monkey', 'Omnivore', 'https://i1.pickpik.com/photos/451/366/360/monkey-wildlife-nature-wild-preview.jpg', 2),
+('Parrot', 'Herbivore', 'https://i.pinimg.com/736x/e7/dd/fa/e7ddfa0c8e97a80579b8d26e01fac226.jpg', 2),
+('Snake', 'Carnivore', 'https://images.unsplash.com/photo-1761887411078-9081eb61d5e3?fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000', 2),
+('Gorilla', 'Herbivore', 'https://assets.worldwildlife.org/www-prd/images/wwfcmsprodimagesMountain_Gorilla_Silverback_W.width-1000.jpg', 2),
 
-('Camel', 'Herbivore', 'camel.jpg', 3),
-('Fennec Fox', 'Carnivore', 'fennec_fox.jpg', 3),
-('Scorpion', 'Carnivore', 'scorpion.jpg', 3),
-('Meerkat', 'Omnivore', 'meerkat.jpg', 3),
-('Lizard', 'Carnivore', 'lizard.jpg', 3),
+('Camel', 'Herbivore', 'https://discoversaharatours.com/wp-content/uploads/2024/05/camels-riding-through-erg-chebbi-dunes-in-merzouga-morocco-1184x790.jpg', 3),
+('Fennec Fox', 'Carnivore', 'https://i.natgeofe.com/k/1db1b816-aa92-434e-994f-d3298c9f58f8/fennec-fox-hole.jpg', 3),
+('Scorpion', 'Carnivore', 'https://i0.wp.com/www.wildlifenomads.com/wp-content/uploads/2025/09/Giant-Hairy-Scorpion-Hadrurus-arizonensis.webp?fit=700%2C550&ssl=1', 3),
+('Meerkat', 'Omnivore', 'https://media.sciencephoto.com/c0/14/09/26/c0140926-800px-wm.jpg', 3),
+('Lizard', 'Carnivore', 'https://us.images.westend61.de/0001001413pw/close-up-of-lizard-on-desert-rock-CUF40287.jpg', 3),
 
-('Shark', 'Carnivore', 'shark.jpg', 4),
-('Dolphin', 'Carnivore', 'dolphin.jpg', 4),
-('Octopus', 'Carnivore', 'octopus.jpg', 4),
-('Sea Turtle', 'Herbivore', 'sea_turtle.jpg', 4),
-('Clownfish', 'Omnivore', 'clownfish.jpg', 4);
+('Shark', 'Carnivore', 'https://www.ikelite.com/cdn/shop/articles/great-white-steve-miller.jpg?crop=center&height=1200&v=1573442582&width=1200', 4),
+('Dolphin', 'Carnivore', 'https://images.theconversation.com/files/670435/original/file-20250527-56-zjcec4.jpg?auto=format&fit=crop&h=668&ixlib=rb-4.1.0&q=45&rect=0%2C108%2C3600%2C1800&w=1356', 4),
+('Octopus', 'Carnivore', 'https://c.files.bbci.co.uk/D80F/production/_115211355_octopustentacles.jpg', 4),
+('Sea Turtle', 'Herbivore', 'https://www.oceanicworldwide.com/wp-content/uploads/sites/6/2020/04/pasted-image-0-1-e1580424389623.png', 4),
+('Clownfish', 'Omnivore', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Amphiprion_ocellaris_%28Clown_anemonefish%29_by_Nick_Hobgood.jpg/1200px-Amphiprion_ocellaris_%28Clown_anemonefish%29_by_Nick_Hobgood.jpg', 4);
+
+-- Edit 
+
+UPDATE Animals
+SET Alimentaire_type = 'Herbivore'
+WHERE Name_Animals = 'Lion';
+
+-- Delete
+
+DELETE FROM Animals WHERE ID_Animals = 1;
+
+-- filter only 1 type 
+
+SELECT Animals.ID_Animals,
+       Animals.Name_Animals,
+       Animals.Alimentaire_type,
+       Animals.Image_Animals,
+       Habitat.NomHab
+FROM Animals , Habitat 
+WHERE Animals.HabitatID = Habitat.IdHabitat and Habitat.NomHab = 'Jungle';
+
+-- filter kola type bo7edo 
+
+SELECT Animals.ID_Animals,
+       Animals.Name_Animals,
+       Animals.Alimentaire_type,
+       Animals.Image_Animals,
+       Habitat.NomHab
+FROM Animals , Habitat 
+WHERE Animals.HabitatID = Habitat.IdHabitat;
+
+--
+
+SELECT * FROM Animals;
+
+SELECT * FROM Habitat;
