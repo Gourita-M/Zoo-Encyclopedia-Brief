@@ -1,30 +1,5 @@
 <?php
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$database   = "Zoo_Encyclopedia";
-
-
-$connection = new mysqli($servername, $username, $password, $database);
-
-if ($connection->connect_error) {
-    echo "Connecting Failed";
-}
-
-echo "Connected successfully!";
-$sql = "SELECT * FROM Animals";
-$result = $connection->query($sql);
-
-/*
-while($row = $result->fetch_assoc()) {
-        echo "ID: " . $row["ID_Animals"] . "<br>";
-        echo "Name: " . $row["Name_Animals"] . "<br>";
-        echo "Food Type: " . $row["Alimentaire_type"] . "<br>";
-        echo "Image: " . $row["Image_Animals"] . "<br>";
-        echo "Habitat ID: " . $row["HabitatID"] . "<br>";
-        echo "<hr>";
-    }
-*/
+   include "./Pages/sql_connect.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +14,9 @@ while($row = $result->fetch_assoc()) {
     <h1 class="text-xl font-bold">Zoo Encyclopedia</h1>
     <div class="space-x-4">
       <button class="bg-white text-green-600 px-3 py-1 rounded">Home</button>
-      <button class="bg-white text-green-600 px-3 py-1 rounded">Add Animal</button>
+      <button class="bg-white text-green-600 px-3 py-1 rounded">
+        <a href="./Pages/Add_Animal.php">Add Animal</a>
+      </button>
       <button class="bg-white text-green-600 px-3 py-1 rounded">Add Habitat</button>
     </div>
   </nav>
@@ -65,21 +42,21 @@ while($row = $result->fetch_assoc()) {
   <section class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <?php
     while($row = $result->fetch_assoc()) {
-        echo '
-        <div class="bg-white shadow rounded overflow-hidden">
-            <img src="'.$row["Image_Animals"].'" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h3 class="text-lg font-bold">'.$row["Name_Animals"].'</h3>
-                <p>Food: '.$row["Alimentaire_type"].'</p>
-                <div class="mt-4 flex gap-2">
-                    <a href="edit.php" 
-                    class="bg-yellow-400 text-white px-3 py-1 rounded">Edit</a>
-                    <a href="delete.php" 
-                    class="bg-red-500 text-white px-3 py-1 rounded">Delete</a>
+        echo "
+        <div class='bg-white shadow rounded overflow-hidden'>
+            <img src='{$row["Image_Animals"]}' class='w-full h-48 object-cover'>
+            <div class='p-4'>
+                <h3 class='text-lg font-bold'>{$row["Name_Animals"]}</h3>
+                <p>Food: {$row["Alimentaire_type"]} </p>
+                <div class='mt-4 flex gap-2'>
+                    <a href='./Pages/edit.php?id={$row["ID_Animals"]}' 
+                    class='bg-yellow-400 text-white px-3 py-1 rounded'>Edit</a>
+                    <a href='./Pages/delete.php?id={$row["ID_Animals"]}'
+                    class='bg-red-500 text-white px-3 py-1 rounded'>Delete</a>
                 </div>
             </div>
         </div>
-        ';
+        ";
     }
     ?>
 </section>
@@ -94,3 +71,8 @@ while($row = $result->fetch_assoc()) {
   </footer>
 </body>
 </html>
+<?php
+     $addname = $_POST["addname"];
+
+     echo $addname;
+?>
