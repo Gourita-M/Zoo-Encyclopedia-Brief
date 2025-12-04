@@ -13,11 +13,15 @@
   <nav class="bg-green-600 text-white p-4 flex justify-between items-center">
     <h1 class="text-xl font-bold">Zoo Encyclopedia</h1>
     <div class="space-x-4">
-      <button class="bg-white text-green-600 px-3 py-1 rounded">Home</button>
-      <button class="bg-white text-green-600 px-3 py-1 rounded">
-        <a href="./Pages/Add_Animal.php">Add Animal</a>
-      </button>
-      <button class="bg-white text-green-600 px-3 py-1 rounded">Add Habitat</button>
+      <a href="./index.php" class="bg-white text-green-600 px-3 py-1 rounded">
+        Home
+      </a>
+      <a href="./Pages/Add_Animal.php" class="bg-white text-green-600 px-3 py-1 rounded">
+        Add an Animal
+      </a>
+      <a href="../index.php" class="bg-white text-green-600 px-3 py-1 rounded">
+        Add New Habitat
+      </a>
     </div>
   </nav>
   <section class="p-6">
@@ -44,9 +48,23 @@
     if(isset($_POST['filterr'])){
     $habiii = $_POST['habittt'];
     $type = $_POST['type'];
-    if($habiii == 'All Habitats' || $type == 'All Alimentaire Type'){
-      echo "<div>testing</div>";
+    if($habiii == '' && $type == ''){
+      $allhabi = "SELECT 
+                  Animals.ID_Animals,
+                  Animals.Name_Animals,
+                  Animals.Alimentaire_type,
+                  Animals.Image_Animals,
+                  Habitat.NomHab
+                  FROM Animals , Habitat
+                  WHERE Animals.HabitatID = Habitat.IdHabitat;
+                  ";
+      $fil = $connection->query($allhabi);
+      while($show = $fil->fetch_assoc()) {
+        addtohtml($show);
+     }
+     
     }
+    else{
     $filtering = "SELECT Animals.ID_Animals,
             Animals.Name_Animals,
             Animals.Alimentaire_type,
@@ -58,43 +76,15 @@
             and Alimentaire_type = '$type';";
     $fil = $connection->query($filtering);
     while($show = $fil->fetch_assoc()) {
-        echo "
-        <div class='bg-white shadow rounded overflow-hidden'>
-            <img src='{$show["Image_Animals"]}' class='w-full h-48 object-cover'>
-            <div class='p-4'>
-                <h3 class='text-lg font-bold'>{$show["Name_Animals"]}</h3>
-                <p>Food: {$show["Alimentaire_type"]} </p>
-                <div class='mt-4 flex gap-2'>
-                    <a href='./Pages/edit.php?id={$show["ID_Animals"]}' 
-                    class='bg-yellow-400 text-white px-3 py-1 rounded'>Edit</a>
-                    <a href='./Pages/delete.php?id={$show["ID_Animals"]}'
-                    class='bg-red-500 text-white px-3 py-1 rounded'>Delete</a>
-                </div>
-            </div>
-        </div>
-        ";
+        addtohtml($show);
+     }
     }
     } else {
       $showall = "SELECT * FROM Animals;";
       $fil = $connection->query($showall);
       while($show = $fil->fetch_assoc()) {
-        echo "
-        <div class='bg-white shadow rounded overflow-hidden'>
-            <img src='{$show["Image_Animals"]}' class='w-full h-48 object-cover'>
-            <div class='p-4'>
-                <h3 class='text-lg font-bold'>{$show["Name_Animals"]}</h3>
-                <p>Food: {$show["Alimentaire_type"]} </p>
-                <div class='mt-4 flex gap-2'>
-                    <a href='./Pages/edit.php?id={$show["ID_Animals"]}' 
-                    class='bg-yellow-400 text-white px-3 py-1 rounded'>Edit</a>
-                    <a href='./Pages/delete.php?id={$show["ID_Animals"]}'
-                    class='bg-red-500 text-white px-3 py-1 rounded'>Delete</a>
-                </div>
-            </div>
-        </div>
-        ";
+        addtohtml($show);
       }
-      echo "test";
     }
     ?>
 </section>
@@ -109,3 +99,23 @@
   </footer>
 </body>
 </html>
+
+<?php 
+   function addtohtml($ee){
+    echo "
+        <div class='bg-white shadow rounded overflow-hidden'>
+            <img src='{$ee["Image_Animals"]}' class='w-full h-48 object-cover'>
+            <div class='p-4'>
+                <h3 class='text-lg font-bold'>{$ee["Name_Animals"]}</h3>
+                <p>Food: {$ee["Alimentaire_type"]} </p>
+                <div class='mt-4 flex gap-2'>
+                    <a href='./Pages/edit.php?id={$ee["ID_Animals"]}' 
+                    class='bg-yellow-400 text-white px-3 py-1 rounded'>Edit</a>
+                    <a href='./Pages/delete.php?id={$ee["ID_Animals"]}'
+                    class='bg-red-500 text-white px-3 py-1 rounded'>Delete</a>
+                </div>
+            </div>
+        </div>
+        ";
+   }
+?>
