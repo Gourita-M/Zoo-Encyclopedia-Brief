@@ -22,41 +22,76 @@
   </nav>
   <section class="p-6">
     <h2 class="text-lg font-semibold mb-2">Filters</h2>
-    <div class="flex gap-4">
-      <select class="p-2 border rounded">
+    <form method="POST" class="flex gap-4">
+      <select name="habittt" class="p-2 border rounded">
         <option value="">All Habitats</option>
         <option value="Savannah">Savannah</option>
         <option value="Jungle">Jungle</option>
         <option value="Desert">Desert</option>
         <option value="Ocean">Ocean</option>
       </select>
-      <select class="p-2 border rounded">
-        <option value="">All Food Types</option>
+      <select name="type" class="p-2 border rounded">
+        <option value="">All Alimentaire Type</option>
         <option value="Carnivore">Carnivore</option>
         <option value="Herbivore">Herbivore</option>
         <option value="Omnivore">Omnivore</option>
       </select>
-      <button class="bg-green-600 text-white px-4 py-2 rounded">Filter</button>
-    </div>
+      <button type="submit" name="filterr" class="bg-green-600 text-white px-4 py-2 rounded">Filter</button>
+</form>
   </section>
   <section class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <?php
-    while($row = $result->fetch_assoc()) {
+    if(isset($_POST['filterr'])){
+    $habiii = $_POST['habittt'];
+    $type = $_POST['type'];
+    $filtering = "SELECT Animals.ID_Animals,
+            Animals.Name_Animals,
+            Animals.Alimentaire_type,
+            Animals.Image_Animals,
+            Habitat.NomHab
+            FROM Animals , Habitat 
+            WHERE Animals.HabitatID = Habitat.IdHabitat 
+            and Habitat.NomHab = '$habiii'
+            and Alimentaire_type = '$type';";
+    $fil = $connection->query($filtering);
+    while($show = $fil->fetch_assoc()) {
         echo "
         <div class='bg-white shadow rounded overflow-hidden'>
-            <img src='{$row["Image_Animals"]}' class='w-full h-48 object-cover'>
+            <img src='{$show["Image_Animals"]}' class='w-full h-48 object-cover'>
             <div class='p-4'>
-                <h3 class='text-lg font-bold'>{$row["Name_Animals"]}</h3>
-                <p>Food: {$row["Alimentaire_type"]} </p>
+                <h3 class='text-lg font-bold'>{$show["Name_Animals"]}</h3>
+                <p>Food: {$show["Alimentaire_type"]} </p>
                 <div class='mt-4 flex gap-2'>
-                    <a href='./Pages/edit.php?id={$row["ID_Animals"]}' 
+                    <a href='./Pages/edit.php?id={$show["ID_Animals"]}' 
                     class='bg-yellow-400 text-white px-3 py-1 rounded'>Edit</a>
-                    <a href='./Pages/delete.php?id={$row["ID_Animals"]}'
+                    <a href='./Pages/delete.php?id={$show["ID_Animals"]}'
                     class='bg-red-500 text-white px-3 py-1 rounded'>Delete</a>
                 </div>
             </div>
         </div>
         ";
+    }
+    } else {
+      $showall = "SELECT * FROM Animals;";
+      $fil = $connection->query($showall);
+      while($show = $fil->fetch_assoc()) {
+        echo "
+        <div class='bg-white shadow rounded overflow-hidden'>
+            <img src='{$show["Image_Animals"]}' class='w-full h-48 object-cover'>
+            <div class='p-4'>
+                <h3 class='text-lg font-bold'>{$show["Name_Animals"]}</h3>
+                <p>Food: {$show["Alimentaire_type"]} </p>
+                <div class='mt-4 flex gap-2'>
+                    <a href='./Pages/edit.php?id={$show["ID_Animals"]}' 
+                    class='bg-yellow-400 text-white px-3 py-1 rounded'>Edit</a>
+                    <a href='./Pages/delete.php?id={$show["ID_Animals"]}'
+                    class='bg-red-500 text-white px-3 py-1 rounded'>Delete</a>
+                </div>
+            </div>
+        </div>
+        ";
+      }
+      echo "test";
     }
     ?>
 </section>
@@ -71,8 +106,3 @@
   </footer>
 </body>
 </html>
-<?php
-     $addname = $_POST["addname"];
-
-     echo $addname;
-?>
