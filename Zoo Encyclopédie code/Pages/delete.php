@@ -10,9 +10,10 @@ $row = $result->fetch_assoc();
 
 if(isset($_POST["confirm"])){
     echo "Hey";
-    $delete_table = "DELETE FROM Animles
+    $delete_table = "DELETE FROM Animals
                   WHERE ID_Animals = $id";
     $connection->query($delete_table);
+    header("Location: ../index.php");
 }
 ?>
 <!DOCTYPE html>
