@@ -26,7 +26,7 @@
   </nav>
   <section class="p-6">
     <h2 class="text-lg font-semibold mb-2">Filters</h2>
-    <form method="POST" class="flex gap-4">
+    <form id="formm" method="POST" class="flex gap-4">
       <select name="habittt" class="p-2 border rounded">
         <option value="">All Habitats</option>
         <option value="Savannah">Savannah</option>
@@ -97,8 +97,10 @@
   <footer class="bg-green-600 text-white p-4 text-center">
     2025 Zoo Management System
   </footer>
+
 </body>
 </html>
+
 
 <?php 
    function addtohtml($ee){
