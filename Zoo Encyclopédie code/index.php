@@ -44,6 +44,9 @@
     if(isset($_POST['filterr'])){
     $habiii = $_POST['habittt'];
     $type = $_POST['type'];
+    if($habiii == 'All Habitats' || $type == 'All Alimentaire Type'){
+      echo "<div>testing</div>";
+    }
     $filtering = "SELECT Animals.ID_Animals,
             Animals.Name_Animals,
             Animals.Alimentaire_type,
