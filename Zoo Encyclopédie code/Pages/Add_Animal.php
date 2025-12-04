@@ -16,7 +16,9 @@
                     (Name_animals, Alimentaire_type, Image_Animals, HabitatID)
                     VALUES ('$addname', '$addfood', '$addimg', '$habitatIDconvert');
                     ";
+                    
     $connection->query($addingtosql);
+    header("Location: ../index.php");
    }
 ?>
 <!DOCTYPE html>
@@ -31,8 +33,9 @@
     <nav class="bg-green-600 text-white p-4 flex justify-between items-center">
     <h1 class="text-xl font-bold">Zoo Encyclopedia</h1>
     <div class="space-x-4">
-      <button class="bg-white text-green-600 px-3 py-1 rounded">Home</button>
-      <button class="bg-white text-green-600 px-3 py-1 rounded">Add Animal</button>
+      <button class="bg-white text-green-600 px-3 py-1 rounded">
+        <a href="../index.php">Home</a>
+      </button>
       <button class="bg-white text-green-600 px-3 py-1 rounded">Add Habitat</button>
     </div>
   </nav>
@@ -49,9 +52,8 @@
       <label class="block mb-2">Image URL:</label>
       <input type="text" name="addimage" class="w-full border px-2 py-1 mb-3" required>
 
-      <label class="block mb-2 font-semibold">Habitat ID:</label>
-        <select class="p-2 border rounded" name="habita">
-            <option value="">All Habitats</option>
+      <label class="block mb-2 font-semibold">Habitat:</label>
+        <select class="p-2 border rounded w-full" name="habita" require>
             <option value="Savannah">Savannah</option>
             <option value="Jungle">Jungle</option>
             <option value="Desert">Desert</option>
