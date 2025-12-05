@@ -1,95 +1,166 @@
 <?php
-include "./sql_connect.php";
 
-// 1. Total animals
-$total_sql = "SELECT COUNT(*) AS total_animals FROM animals";
-$total_result = $connection->query($total_sql);
-$total = $total_result->fetch_assoc()['total_animals'];
+include './sql_connect.php';
 
-// 2. Animals by habitat
-$habitat_sql = "
-    SELECT Habitat.NomHab, COUNT(Animals.ID_Animals) AS count_animals
-    FROM animals
-    JOIN habitat ON animals.HabitatID = habitat.IdHabitat
-    GROUP BY Habitat.NomHab
-";
-$habitat_result = $connection->query($habitat_sql);
+if(isset($_GET['action'])){
+    $action = $_GET['action'];
+    header('Content-Type: application/json');
 
-// 3. Animals by food type
-$type_sql = "
-    SELECT Alimentaire_type, COUNT(*) AS count_type
-    FROM animals
-    GROUP BY Alimentaire_type
-";
-$type_result = $connection->query($type_sql);
+    if($action === 'habitat_counts'){
+        $sql = "SELECT h.IdHabitat AS id, h.NomHab AS name, COUNT(a.ID_Animals) AS cnt
+                FROM habitat h
+                LEFT JOIN animals a ON a.HabitatID = h.IdHabitat
+                GROUP BY h.IdHabitat, h.NomHab
+                ORDER BY cnt DESC";
+        $res = $connection->query($sql);
+        $out = [];
+
+        foreach($res as $row){
+            $out[] = $row;
+        }
+
+        echo json_encode($out);
+        exit;
+    }
+
+    if($action === 'food_counts'){
+        $sql = "SELECT Alimentaire_type AS type, COUNT(*) AS cnt FROM animals GROUP BY Alimentaire_type";
+        $res = $connection->query($sql);
+        $out = [];
+
+        foreach($res as $row){
+            $out[] = $row;
+        }
+
+        echo json_encode($out);
+        exit;
+    }
+
+    if($action === 'recent_animals'){
+        $sql = "SELECT a.ID_Animals AS id, a.Name_Animals AS name, a.Image_Animals AS img, h.NomHab AS habitat
+                FROM animals a
+                LEFT JOIN habitat h ON a.HabitatID = h.IdHabitat
+                ORDER BY a.ID_Animals DESC LIMIT 10";
+        $res = $connection->query($sql);
+        $out = [];
+
+        foreach($res as $row){
+            $out[] = $row;
+        }
+
+        echo json_encode($out);
+        exit;
+    }
+
+    echo json_encode(['error' => 'unknown action']);
+    exit;
+}
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Statistics</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Statistics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-<nav class="bg-green-600 text-white p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">Zoo Encyclopedia</h1>
-    <div class="space-x-4">
-      <a href="../index.php" class="bg-white text-green-600 px-3 py-1 rounded">
-        Home
-      </a>
-    </div>
-  </nav>
-<main class="bg-gray-100 p-6">
 
-<h1 class="text-3xl font-bold mb-6">Zoo Statistics</h1>
+<body class="bg-slate-100 text-slate-800">
+  <div class="max-w-6xl mx-auto p-6">
+    <header class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold">Stupid Animal Stats (no functions)</h1>
+      <div class="text-sm text-slate-600">Direct, dumb, and working.</div>
+    </header>
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white p-4 rounded-2xl shadow">
+        <h2 class="font-medium mb-2">Animals per habitat (bar)</h2>
+        <div class="relative h-[380px]">
+            <canvas id="habitatBar"></canvas>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow">
+        <h2 class="font-medium mb-2">Food type distribution (pie)</h2>
+        <div class="relative h-[380px]">
+            <canvas id="foodPie"></canvas>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-2xl shadow md:col-span-2">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="font-medium">Recent animals</h2>
+          <button id="refreshList" class="px-3 py-1 text-sm rounded bg-slate-200">Refresh</button>
+        </div>
+        <div id="recentList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3"></div>
+      </div>
+    </section>
+    <footer class="mt-6 text-xs text-slate-500">Change the include path if needed.</footer>
+  </div>
+<script>
+fetch('?action=habitat_counts')
+.then(r => r.json())
+.then(data => {
+  var labels = data.map(x => x.name);
+  var counts = data.map(x => Number(x.cnt));
 
-<!-- Total animals -->
-<div class="bg-white shadow rounded p-6 mb-6">
-  <h2 class="text-xl font-semibold mb-2">Total Animals</h2>
-  <p class="text-4xl font-bold text-blue-600"><?php echo $total; ?></p>
-</div>
+  new Chart(document.getElementById('habitatBar').getContext('2d'), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ label: 'Animals', data: counts }] },
+    options: { 
+        responsive:true, 
+        maintainAspectRatio:false,
+        plugins:{ legend:{ display:false } }
+    }
+  });
+});
 
-<!-- Animals per habitat -->
-<div class="bg-white shadow rounded p-6 mb-6">
-  <h2 class="text-xl font-semibold mb-4">Animals by Habitat</h2>
-  <table class="w-full border">
-    <tr class="bg-gray-200">
-      <th class="border px-4 py-2">Habitat</th>
-      <th class="border px-4 py-2">Count</th>
-    </tr>
+fetch('?action=food_counts')
+.then(r => r.json())
+.then(data => {
+  var labels = data.map(x => x.type);
+  var counts = data.map(x => Number(x.cnt));
 
-    <?php while ($row = $habitat_result->fetch_assoc()) { ?>
-      <tr>
-        <td class="border px-4 py-2"><?php echo $row['NomHab']; ?></td>
-        <td class="border px-4 py-2"><?php echo $row['count_animals']; ?></td>
-      </tr>
-    <?php } ?>
+  new Chart(document.getElementById('foodPie').getContext('2d'), {
+    type: 'pie',
+    data:{ labels:labels, datasets:[{ data:counts }] },
+    options:{ responsive:true, maintainAspectRatio:false }
+  });
+});
 
-  </table>
-</div>
+function loadRecent(){
+  fetch('?action=recent_animals')
+  .then(r => r.json())
+  .then(list => {
+    var box = document.getElementById('recentList');
+    box.innerHTML = '';
 
-<!-- Animals by food type -->
-<div class="bg-white shadow rounded p-6">
-  <h2 class="text-xl font-semibold mb-4">Animals by Food Type</h2>
-  <table class="w-full border">
-    <tr class="bg-gray-200">
-      <th class="border px-4 py-2">Food Type</th>
-      <th class="border px-4 py-2">Count</th>
-    </tr>
+    list.forEach(a => {
+      let card = document.createElement('div');
+      card.className = 'bg-slate-50 p-3 rounded-lg flex flex-col gap-2 items-center text-center';
 
-    <?php while ($row = $type_result->fetch_assoc()) { ?>
-      <tr>
-        <td class="border px-4 py-2"><?php echo $row['Alimentaire_type']; ?></td>
-        <td class="border px-4 py-2"><?php echo $row['count_type']; ?></td>
-      </tr>
-    <?php } ?>
+      let img = document.createElement('img');
+      img.className = 'w-24 h-24 object-cover rounded-full border';
+      img.src = a.img && a.img.trim() !== '' ? a.img : 'https://placehold.co/200';
 
-  </table>
-</div>
+      let name = document.createElement('div');
+      name.className = 'font-medium';
+      name.textContent = a.name;
 
-</main>
-<footer class="bg-green-600 text-white p-4 text-center">
-    2025 Zoo Management System
-</footer>
+      let hab = document.createElement('div');
+      hab.className = 'text-xs text-slate-500';
+      hab.textContent = a.habitat;
+
+      card.appendChild(img);
+      card.appendChild(name);
+      card.appendChild(hab);
+
+      box.appendChild(card);
+    });
+  });
+}
+
+loadRecent();
+document.getElementById('refreshList').onclick = loadRecent;
+</script>
+
 </body>
 </html>
