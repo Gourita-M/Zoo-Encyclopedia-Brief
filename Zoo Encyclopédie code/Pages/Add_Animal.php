@@ -52,7 +52,7 @@
       </select>
 
       <label class="block mb-2">Image URL:</label>
-      <input type="text" name="addimage" class="w-full border px-2 py-1 mb-3" required>
+      <input type="file" name="addimage" class="w-full border px-2 py-1 mb-3" required>
 
       <label class="block mb-2 font-semibold">Habitat:</label>
         <select class="p-2 border rounded w-full" name="addhabitat" required>
@@ -62,7 +62,9 @@
             <option value="4">Ocean</option>
         </select>
       <div class="flex justify-end gap-2 mt-4">
-        <button id="closepop" type="button" class="px-3 py-1 bg-gray-400 text-white rounded">Cancel</button>
+        <button type="button" class="px-3 py-1 bg-gray-400 text-white rounded">
+          <a href="../index.php">Cancel</a>
+        </button>
         <button type="submit" name="adde" class="px-3 py-1 bg-blue-500 text-white rounded">Save</button>
       </div>
     </form>
