@@ -7,14 +7,13 @@
     $addfood = $_POST["addfood"];
     $addimg = $_POST["addimage"];
     $addhabitat = $_POST["addhabitat"];
-    $habitatIDconvert = 2;
 
 
     echo $addname, $addfood, $addimg, $addhabitat;
 
     $addingtosql = "INSERT INTO animals 
                     (Name_animals, Alimentaire_type, Image_Animals, HabitatID)
-                    VALUES ('$addname', '$addfood', '$addimg', '$habitatIDconvert');
+                    VALUES ('$addname', '$addfood', '$addimg', '$addhabitat');
                     ";
 
     $connection->query($addingtosql);
@@ -46,17 +45,21 @@
       <input type="text" name="addname" class="w-full border px-2 py-1 mb-3" required>
 
       <label class="block mb-2">Food Type:</label>
-      <input type="text" name="addfood" class="w-full border px-2 py-1 mb-3" required>
+      <select class="p-2 border rounded w-full" name="addfood" class="p-2 border rounded">
+        <option value="Carnivore">Carnivore</option>
+        <option value="Herbivore">Herbivore</option>
+        <option value="Omnivore">Omnivore</option>
+      </select>
 
       <label class="block mb-2">Image URL:</label>
       <input type="text" name="addimage" class="w-full border px-2 py-1 mb-3" required>
 
       <label class="block mb-2 font-semibold">Habitat:</label>
-        <select class="p-2 border rounded w-full" name="habita" require>
-            <option value="Savannah">Savannah</option>
-            <option value="Jungle">Jungle</option>
-            <option value="Desert">Desert</option>
-            <option value="Ocean">Ocean</option>
+        <select class="p-2 border rounded w-full" name="addhabitat" required>
+            <option value="1">Savannah</option>
+            <option value="2">Jungle</option>
+            <option value="3">Desert</option>
+            <option value="4">Ocean</option>
         </select>
       <div class="flex justify-end gap-2 mt-4">
         <button id="closepop" type="button" class="px-3 py-1 bg-gray-400 text-white rounded">Cancel</button>

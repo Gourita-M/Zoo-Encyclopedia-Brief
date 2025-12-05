@@ -46,45 +46,36 @@
   <section class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <?php
     if(isset($_POST['filterr'])){
-    $habiii = $_POST['habittt'];
-    $type = $_POST['type'];
-    if($habiii == '' && $type == ''){
-      $allhabi = "SELECT 
-                  Animals.ID_Animals,
-                  Animals.Name_Animals,
-                  Animals.Alimentaire_type,
-                  Animals.Image_Animals,
-                  Habitat.NomHab
-                  FROM Animals , Habitat
-                  WHERE Animals.HabitatID = Habitat.IdHabitat;
-                  ";
-      $fil = $connection->query($allhabi);
-      while($show = $fil->fetch_assoc()) {
-        addtohtml($show);
-     }
-     
+      $habiii = $_POST['habittt'];
+      $type = $_POST['type'];
+      $allhabi = "SELECT Animals.ID_Animals,
+             Animals.Name_Animals,
+             Animals.Alimentaire_type,
+             Animals.Image_Animals,
+             Habitat.NomHab
+             FROM Animals , Habitat 
+             WHERE Animals.HabitatID = Habitat.IdHabitat 
+             and Habitat.NomHab like '%$habiii%'
+             and Alimentaire_type like '%$type%'";
+        $fil = $connection->query($allhabi);
+           while($show = $fil->fetch_assoc()) {
+            addtohtml($show);
+          }
     }
     else{
-    $filtering = "SELECT Animals.ID_Animals,
-            Animals.Name_Animals,
-            Animals.Alimentaire_type,
-            Animals.Image_Animals,
-            Habitat.NomHab
-            FROM Animals , Habitat 
-            WHERE Animals.HabitatID = Habitat.IdHabitat 
-            and Habitat.NomHab = '$habiii'
-            and Alimentaire_type = '$type';";
-    $fil = $connection->query($filtering);
-    while($show = $fil->fetch_assoc()) {
-        addtohtml($show);
-     }
-    }
-    } else {
-      $showall = "SELECT * FROM Animals;";
-      $fil = $connection->query($showall);
-      while($show = $fil->fetch_assoc()) {
-        addtohtml($show);
-      }
+      $allhabi = "SELECT Animals.ID_Animals,
+             Animals.Name_Animals,
+             Animals.Alimentaire_type,
+             Animals.Image_Animals,
+             Habitat.NomHab
+             FROM Animals , Habitat 
+             WHERE Animals.HabitatID = Habitat.IdHabitat 
+             and Habitat.NomHab like '%'
+             and Alimentaire_type like '%'";
+        $fil = $connection->query($allhabi);
+           while($show = $fil->fetch_assoc()) {
+            addtohtml($show);
+          }
     }
     ?>
 </section>
@@ -110,6 +101,7 @@
             <div class='p-4'>
                 <h3 class='text-lg font-bold'>{$ee["Name_Animals"]}</h3>
                 <p>Food: {$ee["Alimentaire_type"]} </p>
+                <p>Alimentaire Type: <span class='text-orange-600'>{$ee["NomHab"]}</span> </p>
                 <div class='mt-4 flex gap-2'>
                     <a href='./Pages/edit.php?id={$ee["ID_Animals"]}' 
                     class='bg-yellow-400 text-white px-3 py-1 rounded'>Edit</a>

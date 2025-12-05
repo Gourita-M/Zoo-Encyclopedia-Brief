@@ -49,7 +49,11 @@ echo $Newname, $newfoodtype, $newimg, $newhati;
         <input type="text" name="name" value="<?php echo $row['Name_Animals']; ?>" class="border p-2 w-full mb-4 rounded">
 
         <label class="block mb-2 font-semibold">Food Type:</label>
-        <input type="text" name="food" value="<?php echo $row['Alimentaire_type']; ?>" class="border p-2 w-full mb-4 rounded">
+        <select class="p-2 border rounded w-full" name="food" class="p-2 border rounded">
+        <option value="Carnivore">Carnivore</option>
+        <option value="Herbivore">Herbivore</option>
+        <option value="Omnivore">Omnivore</option>
+      </select>
         <div>
             <label class="block mb-2 font-semibold">Image URL:</label>
             <input type="text" name="image" value="<?php echo $row['Image_Animals']; ?>" class="border p-2 w-[79%] mb-4 rounded">
