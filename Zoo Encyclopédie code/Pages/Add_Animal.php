@@ -8,7 +8,6 @@
     $addimg = $_POST["addimage"];
     $addhabitat = $_POST["addhabitat"];
 
-
     echo $addname, $addfood, $addimg, $addhabitat;
 
     $addingtosql = "INSERT INTO animals 
