@@ -16,7 +16,8 @@ if (isset($_POST['update'])) {
     $update_sql = "UPDATE Animals SET 
                     Name_Animals='$Newname', 
                     Alimentaire_type='$newfoodtype', 
-                    Image_Animals='$newimg' 
+                    Image_Animals='$newimg',
+                    HabitatID ='$newhati' 
                    WHERE ID_Animals = $id";
     
     $connection->query($update_sql);
@@ -56,17 +57,14 @@ echo $Newname, $newfoodtype, $newimg, $newhati;
       </select>
         <div>
             <label class="block mb-2 font-semibold">Image URL:</label>
-            <input type="text" name="image" value="<?php echo $row['Image_Animals']; ?>" class="border p-2 w-[79%] mb-4 rounded">
-             or
-            <button class="p-2 bg-orange-300 rounded-lg">Upload</button>
+            <input type="text" name="image" value="<?php echo $row['Image_Animals']; ?>" class="border p-2 w-full mb-4 rounded">
         </div>
         <label class="block mb-2 font-semibold">Habitat ID:</label>
         <select class="p-2 border rounded" name="habita">
-        <option value="">All Habitats</option>
-        <option value="Savannah">Savannah</option>
-        <option value="Jungle">Jungle</option>
-        <option value="Desert">Desert</option>
-        <option value="Ocean">Ocean</option>
+        <option value="1">Savannah</option>
+        <option value="2">Jungle</option>
+        <option value="3">Desert</option>
+        <option value="4">Ocean</option>
       </select>
 
         <div class="flex justify-between">

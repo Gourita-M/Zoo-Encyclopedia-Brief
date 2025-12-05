@@ -51,7 +51,7 @@
       </select>
 
       <label class="block mb-2">Image URL:</label>
-      <input type="file" name="addimage" class="w-full border px-2 py-1 mb-3" required>
+      <input type="text" name="addimage" class="w-full border px-2 py-1 mb-3" required>
 
       <label class="block mb-2 font-semibold">Habitat:</label>
         <select class="p-2 border rounded w-full" name="addhabitat" required>
