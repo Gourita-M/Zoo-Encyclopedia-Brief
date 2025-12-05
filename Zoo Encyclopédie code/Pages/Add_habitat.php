@@ -1,17 +1,19 @@
 <?php
 include "../Pages/sql_connect.php";
 
-$sendtosql = "SELECT * FROM habitat;";
+$sendtosql = "SELECT * FROM Habitat;";
 $result = $connection->query($sendtosql);
 
 if(isset($_POST["subhabi"])){
     $newhabname = $_POST["habi"];
     $newhabDescri = $_POST["descri"];
     
-    $newhabi = "INSERT INTO habitat(Description_habi, NomHab)
+    $newhabi = "INSERT INTO Habitat(Description_habi, NomHab)
                 VALUE('$newhabDescri', '$newhabname');";
     $connection->query($newhabi);
+
     header("Location: ./Add_habitat.php");
+    exit();
 }
 ?>
 

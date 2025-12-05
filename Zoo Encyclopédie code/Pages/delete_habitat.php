@@ -2,14 +2,15 @@
 include "./sql_connect.php";
 $id = $_GET['id'];
 
-$getname = "SELECT * FROM habitat
-            WHERE habitat.IdHabitat = '$id';";
+$getname = "SELECT * FROM Habitat
+            WHERE Habitat.IdHabitat = '$id';";
 $habiname = $connection->query($getname);
 if(isset($_POST['confirm'])){
-    $delethabi = "DELETE FROM habitat 
-                  WHERE habitat.IdHAbitat = '$id';";
+    $delethabi = "DELETE FROM Habitat 
+                  WHERE Habitat.IdHabitat = '$id';";
     $connection->query($delethabi);
     header("Location: ./Add_habitat.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>

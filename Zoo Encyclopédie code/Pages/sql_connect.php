@@ -11,7 +11,6 @@ if ($connection->connect_error) {
     echo "Connecting Failed";
 }
 
-
 $sql = "SELECT * FROM Animals";
 $result = $connection->query($sql);
 ?>

@@ -1,8 +1,8 @@
 <?php
    include "./Pages/sql_connect.php";
 
-   $habinames = "SELECT habitat.NomHab
-                 FROM habitat;";
+   $habinames = "SELECT Habitat.NomHab
+                 FROM Habitat;";
    $resul = $connection->query($habinames);
    
 ?>
@@ -67,9 +67,9 @@
              and Habitat.NomHab like '%$habiii%'
              and Alimentaire_type like '%$type%'";
         $fil = $connection->query($allhabi);
-           while($show = $fil->fetch_assoc()) {
-            addtohtml($show);
-          }
+           foreach($fil as $fii){
+               addtohtml($fii);
+           };
     }
     else{
       $allhabi = "SELECT Animals.ID_Animals,
@@ -82,9 +82,9 @@
              and Habitat.NomHab like '%'
              and Alimentaire_type like '%'";
         $fil = $connection->query($allhabi);
-           while($show = $fil->fetch_assoc()) {
-            addtohtml($show);
-          }
+           foreach($fil as $fii){
+               addtohtml($fii);
+           };
     }
     ?>
 </section>

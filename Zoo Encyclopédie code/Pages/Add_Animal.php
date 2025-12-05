@@ -1,5 +1,15 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
+
 <?php 
    include "./sql_connect.php";
+
+   $habinames = "SELECT Habitat.NomHab, Habitat.IdHabitat
+                 FROM Habitat;";
+   $resul = $connection->query($habinames);
 
    if(isset($_POST['adde'])){
 
@@ -8,13 +18,14 @@
     $addimg = $_POST["addimage"];
     $addhabitat = $_POST["addhabitat"];
 
-    $addingtosql = "INSERT INTO animals 
+    $addingtosql = "INSERT INTO Animals 
                     (Name_animals, Alimentaire_type, Image_Animals, HabitatID)
                     VALUES ('$addname', '$addfood', '$addimg', '$addhabitat');
                     ";
 
     $connection->query($addingtosql);
     header("Location: ../index.php");
+    exit();
    }
 ?>
 <!DOCTYPE html>
@@ -53,10 +64,13 @@
 
       <label class="block mb-2 font-semibold">Habitat:</label>
         <select class="p-2 border rounded w-full" name="addhabitat" required>
-            <option value="1">Savannah</option>
-            <option value="2">Jungle</option>
-            <option value="3">Desert</option>
-            <option value="4">Ocean</option>
+          <?php 
+          foreach($resul as $res){
+          $habii = $res['NomHab'];
+          $habiid = $res['IdHabitat'];
+          echo "<option value='$habiid'>$habii</option>";
+        }
+         ?>
         </select>
       <div class="flex justify-end gap-2 mt-4">
         <button type="button" class="px-3 py-1 bg-gray-400 text-white rounded">
