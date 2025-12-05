@@ -27,6 +27,9 @@
       <a href="./Pages/Add_habitat.php" class="bg-white text-green-600 px-3 py-1 rounded">
         Add New Habitat
       </a>
+      <a href="./Pages/Statistics.php" class="bg-white text-green-600 px-3 py-1 rounded">
+        Statistics
+      </a>
     </div>
   </nav>
   <section class="p-6">
@@ -85,12 +88,6 @@
     }
     ?>
 </section>
-  <section class="p-6">
-    <h2 class="text-lg font-semibold mb-2">Animal Statistics</h2>
-    <div class="bg-white shadow rounded p-4 h-64 flex items-center justify-center">
-      <span class="text-gray-400">Graph Placeholder</span>
-    </div>
-  </section>
   <footer class="bg-green-600 text-white p-4 text-center">
     2025 Zoo Management System
   </footer>
