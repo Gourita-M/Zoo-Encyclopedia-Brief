@@ -1,5 +1,10 @@
 <?php
    include "./Pages/sql_connect.php";
+
+   $habinames = "SELECT habitat.NomHab
+                 FROM habitat;";
+   $resul = $connection->query($habinames);
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +24,7 @@
       <a href="./Pages/Add_Animal.php" class="bg-white text-green-600 px-3 py-1 rounded">
         Add an Animal
       </a>
-      <a href="../index.php" class="bg-white text-green-600 px-3 py-1 rounded">
+      <a href="./Pages/Add_habitat.php" class="bg-white text-green-600 px-3 py-1 rounded">
         Add New Habitat
       </a>
     </div>
@@ -29,10 +34,11 @@
     <form id="formm" method="POST" class="flex gap-4">
       <select name="habittt" class="p-2 border rounded">
         <option value="">All Habitats</option>
-        <option value="Savannah">Savannah</option>
-        <option value="Jungle">Jungle</option>
-        <option value="Desert">Desert</option>
-        <option value="Ocean">Ocean</option>
+        <?php foreach($resul as $res){
+          $habii = $res['NomHab'];
+          echo "<option value='$habii'>$habii</option>";
+        }
+        ?>
       </select>
       <select name="type" class="p-2 border rounded">
         <option value="">All Alimentaire Type</option>
