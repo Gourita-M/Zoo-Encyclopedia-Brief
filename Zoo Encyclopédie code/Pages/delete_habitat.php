@@ -1,7 +1,6 @@
 <?php
 include "./sql_connect.php";
 $id = $_GET['id'];
-echo $id;
 
 $getname = "SELECT * FROM habitat
             WHERE habitat.IdHabitat = '$id';";

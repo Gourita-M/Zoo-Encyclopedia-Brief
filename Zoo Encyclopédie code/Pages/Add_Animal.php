@@ -8,8 +8,6 @@
     $addimg = $_POST["addimage"];
     $addhabitat = $_POST["addhabitat"];
 
-    echo $addname, $addfood, $addimg, $addhabitat;
-
     $addingtosql = "INSERT INTO animals 
                     (Name_animals, Alimentaire_type, Image_Animals, HabitatID)
                     VALUES ('$addname', '$addfood', '$addimg', '$addhabitat');

@@ -2,14 +2,12 @@
 include "./sql_connect.php";
 
  $id = $_GET['id'];
- echo $id;
 
 $sql = "SELECT * FROM Animals WHERE ID_Animals = $id";
 $result = $connection->query($sql);
 $row = $result->fetch_assoc();
 
 if(isset($_POST["confirm"])){
-    echo "Hey";
     $delete_table = "DELETE FROM Animals
                   WHERE ID_Animals = $id";
     $connection->query($delete_table);

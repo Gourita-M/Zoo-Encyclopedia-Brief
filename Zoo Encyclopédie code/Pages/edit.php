@@ -3,8 +3,6 @@ include "./sql_connect.php";
 
 $id = $_GET['id'];
 
-echo "Your ID is ".$id;
-
 $sql = "SELECT * FROM Animals WHERE ID_Animals = $id";
 $result = $connection->query($sql);
 $row = $result->fetch_assoc();
